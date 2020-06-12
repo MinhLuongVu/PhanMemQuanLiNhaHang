@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgroudcoffe">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/border_bottom"
+        tools:ignore="MissingConstraints">
+    <TextView
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtstt"
+        android:text="STT"
+        android:textColor="#ff0000"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txttenban"
+        android:layout_marginLeft="10dp"
+        android:text="Tên bàn"
+        android:textColor="#ff0000"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txttenmon"
+        android:layout_marginLeft="5dp"
+        android:text="Tên món"
+        android:textColor="#ff0000"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtsoluong"
+        android:layout_marginLeft="10dp"
+        android:text="SL"
+        android:textColor="#ff0000"
+        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/txtxuli"
+            android:text="Trạng thái"
+            android:textColor="#ff0000"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    <ListView
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="30dp"
+        android:id="@+id/list_item1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:listSelector="#dfe6e9"
+        android:divider="#000000"
+        android:dividerHeight="1dp"
+        android:theme="@style/Widget.AppCompat.ListView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

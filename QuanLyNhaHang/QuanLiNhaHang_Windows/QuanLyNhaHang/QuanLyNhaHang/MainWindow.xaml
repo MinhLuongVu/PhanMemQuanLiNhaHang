@@ -1,0 +1,1230 @@
+﻿<Window x:Class="QuanLyNhaHang.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyNhaHang"
+        mc:Ignorable="d"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:uc="clr-namespace:QuanLyNhaHang.UserControlXAML"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource MainVM}"
+        Title="Quản lý nhà hàng" 
+        Name="mainWindow"
+        Icon="icon.png">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=mainWindow}"></uc:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="Top">
+
+            <dragablz:TabablzControl Width="auto">
+                
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController/>
+                    
+                </dragablz:TabablzControl.InterTabController>
+
+
+
+                    <!--Thanh toán-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img" Height="auto" Width="auto" Source="thanhtoan.png" />
+                            <TextBlock Text="Thanh toán" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 4 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách bàn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Thanh toán hóa đơn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" BorderBrush="Blue" BorderThickness="0 0 4 0"/>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Height="700" Margin="20 0 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListBox VerticalAlignment="Top" HorizontalAlignment="Center" SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}"  ItemsSource="{Binding DANHSACHBAN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <Button Grid.Row="0" Height="100" Width="100">
+                                                                <Button.Background>
+                                                                    <ImageBrush ImageSource="{Binding Path=TrangThai}"></ImageBrush>
+                                                                </Button.Background>
+                                                            </Button>
+                                                            <TextBlock FontSize="15" Margin="25 0 0 0" Foreground="Blue" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"   Text="{Binding TenBan}" Grid.Row="1"></TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                            </ListBox>
+                                        </ScrollViewer>
+                                    </Grid>
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Auto">
+                                                <ListView  VerticalAlignment="Top" ItemsSource="{Binding GOIMON,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left">
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ListViewItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                            <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                    <Setter Property="BorderBrush" Value="Blue" />
+                                                                    <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                    <Setter Property="Background" Value="#FFFFC704" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Foreground" Value="Blue" />
+                                                                    <Setter Property="BorderBrush" Value="Red" />
+                                                                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <!--<GridViewColumn Header="Mã món"  DisplayMemberBinding="{Binding MaMon,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></GridViewColumn>-->
+                                                            <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding MONAN.TenMon,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></GridViewColumn>
+                                                            <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding SoLuong,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></GridViewColumn>
+                                                            <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding MONAN.DonGia,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,StringFormat= {} {0:N0} VNĐ}"></GridViewColumn>
+                                                            <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding ThanhTien,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,StringFormat= {} {0:N0} VNĐ}" ></GridViewColumn>
+                                                            <GridView.ColumnHeaderContainerStyle>
+                                                                <Style TargetType="GridViewColumnHeader">
+                                                                    <Setter Property="Height" Value="35"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="Width" Value="160"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                    <Setter Property="FontSize" Value="15"/>
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                                <GradientStop Color="Blue" />
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </GridView.ColumnHeaderContainerStyle>
+                                                        </GridView>
+                                                    </ListView.View>
+
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <TextBox Foreground="Blue" FontSize="15" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic" Name="Tien" Text="{Binding Tien}" materialDesign:HintAssist.Hint="Mời nhập số tiền khách hàng đưa là: " Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" VerticalAlignment="Bottom">
+                                                <TextBlock Foreground="Blue" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic" Height="35" Text="{Binding TongTien, StringFormat=Tổng tiền là:  {0:N0} VNĐ}" ></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                <Button Command="{Binding DeleteCommand}" Height="auto" Margin="5" Width="135" BorderBrush="#FF3366CC" >
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="thanhtoan.png" Height="30" Width="30"/>
+                                                        <TextBlock Text="Thanh toán" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+
+                <!--Quản lý nhân viên-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img3" Height="auto" Width="auto" Source="iconnhanvien.jpg" />
+                            <TextBlock Text="Quản lý nhân viên" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 4 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách nhân viên" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách nhân viên" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox Text="{Binding HoTenNV,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" materialDesign:HintAssist.Hint="Họ tên nhân viên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="0 5 0 0">
+                                                <TextBlock Text="Lựa chọn chức vụ:" FontSize="15" Margin="10 20 15 10" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="0 10 15 0">
+                                                <ComboBox ItemsSource="{Binding CHUCVU }" SelectedItem="{Binding SelectedItemCHUCVU}">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <ComboBoxItem Content="{Binding ChucVu1}">
+                                                            </ComboBoxItem>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                    <ComboBox.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ComboBoxItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                            <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                    <Setter Property="BorderBrush" Value="Blue" />
+                                                                    <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                    <Setter Property="Background" Value="#FFFFC704" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Foreground" Value="Blue" />
+                                                                    <Setter Property="BorderBrush" Value="Red" />
+                                                                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.ItemContainerStyle>
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="10 10 10 10">
+                                            <TextBox Text="{Binding TenDN,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="10 10 10 10">
+                                            <TextBox Text="{Binding MatKhau,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="4" Margin="10 10 10 10" >
+                                            <TextBox Text="{Binding HeThong,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" materialDesign:HintAssist.Hint="Android/PC" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="5" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding AddCommandNhanVien}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthem.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thêm" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding EditCommandNhanVien}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconedit.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding DeleteCommandNhanVien}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconxoa.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Xóa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Border Grid.Column="0" BorderBrush="Blue" BorderThickness="0 0 4 0"/>
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="600">
+                                            <ListView ItemsSource="{Binding NHANVIEN}" SelectedItem="{Binding SelectedItemNV ,Mode=OneWayToSource}" HorizontalAlignment="Center">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderBrush" Value="Blue" />
+                                                        <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                                <Setter Property="BorderBrush" Value="Blue" />
+                                                                <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                <Setter Property="Background" Value="#FFFFC704" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="Blue" />
+                                                                <Setter Property="BorderBrush" Value="Red" />
+                                                                <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Tên nhân viên" DisplayMemberBinding="{Binding HoTenNV}"></GridViewColumn>
+                                                        <GridViewColumn  Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDN}"></GridViewColumn>
+                                                        <GridViewColumn  Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"></GridViewColumn>
+                                                        <GridViewColumn Header="Hệ thống" DisplayMemberBinding="{Binding HeThong}"></GridViewColumn>
+                                                        <GridView.ColumnHeaderContainerStyle>
+                                                            <Style TargetType="GridViewColumnHeader">
+                                                                <Setter Property="Height" Value="35"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="Width" Value="300"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                                <Setter Property="FontSize" Value="15"/>
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                            <GradientStop Color="Blue" />
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GridView.ColumnHeaderContainerStyle>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+
+                <!--Quản lý chức vụ-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img6" Height="auto" Width="auto" Source="iconchucvu.jpg" />
+                            <TextBlock Text="Quản lý chức vụ" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="4 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách chức vụ" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách chức vụ" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 0"/>
+                                    <Grid Grid.Column="0"  VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox  Text="{Binding TenChucVu}" materialDesign:HintAssist.Hint="Tên chức vụ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding AddCommandCHUCVU}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"  Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthem.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thêm" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding EditCommandCHUCVU}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"  Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconedit.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button  Command="{Binding DeleteCommandCHUCVU}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"  Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconxoa.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Xóa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListView  ItemsSource="{Binding a1ChucVu}" SelectedItem="{Binding SelectedItemCHUCVU1,Mode=OneWayToSource}" HorizontalAlignment="Center">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderBrush" Value="Blue" />
+                                                        <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                                <Setter Property="BorderBrush" Value="Blue" />
+                                                                <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                <Setter Property="Background" Value="#FFFFC704" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="Blue" />
+                                                                <Setter Property="BorderBrush" Value="Red" />
+                                                                <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                                        <GridViewColumn Header="Chức vụ" DisplayMemberBinding="{Binding CHUCVU.ChucVu1}"></GridViewColumn>
+                                                        <GridView.ColumnHeaderContainerStyle>
+                                                            <Style TargetType="GridViewColumnHeader">
+                                                                <Setter Property="Height" Value="35"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="Width" Value="330"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                                <Setter Property="FontSize" Value="15"/>
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                            <GradientStop Color="Blue" />
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GridView.ColumnHeaderContainerStyle>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+                <!--Quản lí danh sách bàn-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img1" Height="auto" Width="auto" Source="ButtonTable.png" />
+                            <TextBlock Text="Quản lý danh sách bàn" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" BorderBrush="Blue" BorderThickness="0 0 0 4"/>
+                                        <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 4"/>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách bàn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách bàn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 0"/>
+                                    <Grid Grid.Column="0"  VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox  Text="{Binding TenBan}" materialDesign:HintAssist.Hint="Tên bàn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding AddCommandThemban}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthem.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thêm" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding EditCommandSuaban}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"  Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconedit.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button  Command="{Binding DeleteCommandXoaBan}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"  Width="120" Height="auto"  Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconxoa.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Xóa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListView  ItemsSource="{Binding a1DanhSachBan}" SelectedItem="{Binding SelectedItemDanhsachban1,Mode=OneWayToSource}" HorizontalAlignment="Center">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderBrush" Value="Blue" />
+                                                        <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                                <Setter Property="BorderBrush" Value="Blue" />
+                                                                <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                <Setter Property="Background" Value="#FFFFC704" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="Blue" />
+                                                                <Setter Property="BorderBrush" Value="Red" />
+                                                                <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}">
+                                                        </GridViewColumn>
+                                                        <GridViewColumn Header="Tên bàn" DisplayMemberBinding="{Binding DANHSACHBAN.TenBan}"></GridViewColumn>
+                                                        <GridView.ColumnHeaderContainerStyle>
+                                                            <Style TargetType="GridViewColumnHeader">
+                                                                <Setter Property="Height" Value="35"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="Width" Value="310"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                                <Setter Property="FontSize" Value="15"/>
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                            <GradientStop Color="Blue" />
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GridView.ColumnHeaderContainerStyle>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+
+                <!--Quản lý danh sách món ăn-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img4" Height="auto" Width="auto" Source="iconmonan.png" />
+                            <TextBlock Text="Quản lý món ăn" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="4 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách món ăn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách món ăn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox Text="{Binding TenMon}"  materialDesign:HintAssist.Hint="Tên món ăn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="10 10 10 10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Height="200" HorizontalAlignment="Left" >
+                                                <ComboBox ItemsSource="{Binding LOAIMON }" SelectedItem="{Binding SelectedItemLoaiMonAn,Mode=OneWayToSource}" Width="650" >
+                                                    -->
+                                            <!--<ListView.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ListViewItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                            <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                    <Setter Property="BorderBrush" Value="Blue" />
+                                                                    <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                    <Setter Property="Background" Value="#FFFFC704" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Foreground" Value="Blue" />
+                                                                    <Setter Property="BorderBrush" Value="Red" />
+                                                                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.View>-->
+                                            <!--
+                                                        <GridView>
+                                                            <GridViewColumn Header="Tên loại món ăn" DisplayMemberBinding="{Binding TenLoaiMon}"></GridViewColumn>
+                                                            <GridView.ColumnHeaderContainerStyle>
+                                                                <Style TargetType="GridViewColumnHeader">
+                                                                    <Setter Property="Height" Value="35"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="Width" Value="640"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                    <Setter Property="FontSize" Value="15"/>
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                                <GradientStop Color="Blue" />
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </GridView.ColumnHeaderContainerStyle>
+                                                        </GridView>
+                                                    -->
+                                            <!--</ListView.View>-->
+                                            <!--
+                                                </ComboBox>
+                                            </ScrollViewer>-->
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Lựa chọn loại món ăn:" FontSize="15" Margin="0 10 10 10" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <ComboBox x:Name="comboBox" ItemsSource="{Binding LOAIMON }" SelectedItem="{Binding SelectedItemLoaiMonAn}">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <ComboBoxItem Content="{Binding TenLoaiMon}">
+                                                            </ComboBoxItem>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                    <ComboBox.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ComboBoxItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                            <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                    <Setter Property="BorderBrush" Value="Blue" />
+                                                                    <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                    <Setter Property="Background" Value="#FFFFC704" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Foreground" Value="Blue" />
+                                                                    <Setter Property="BorderBrush" Value="Red" />
+                                                                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.ItemContainerStyle>
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="10 10 10 10">
+                                            <TextBox Text="{Binding DonGia}" materialDesign:HintAssist.Hint="Đơn giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="10 10 10 10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="1" HorizontalAlignment="Left">
+                                                <Image Source="{Binding AddHinhAnh}" Height="150" Width="150" />
+                                            </Grid>
+                                            <Grid Grid.Column="0" HorizontalAlignment="Left">
+                                                <Button Command="{Binding OpenCommandHinhAnh}" HorizontalAlignment="Center" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="icontaianh.jpg" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Tải ảnh lên" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Button Command="{Binding AddCommandMonAn}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthem.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thêm" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Button Command="{Binding EditCommandMonAn}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconedit.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <Button Command="{Binding DeleteCommandMonAn}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconxoa.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Xóa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+
+                                    </Grid>
+                                    <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 0"/>
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListView ItemsSource="{Binding aMonAn}" SelectedItem="{Binding SelectedItemMonAn,Mode=OneWayToSource }">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                                        <Setter Property="Height" Value="auto"/>
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderBrush" Value="Blue" />
+                                                        <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                                <Setter Property="BorderBrush" Value="Blue" />
+                                                                <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                <Setter Property="Background" Value="#FFFFC704" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="Blue" />
+                                                                <Setter Property="BorderBrush" Value="Red" />
+                                                                <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Hình minh họa">
+                                                            <GridViewColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Image Source="{Binding aHinhAnh}" Height="100" Width="100">
+                                                                    </Image>
+                                                                </DataTemplate>
+                                                            </GridViewColumn.CellTemplate>
+                                                        </GridViewColumn>
+                                                        <GridViewColumn Header="Tên món"  DisplayMemberBinding="{Binding aTenMon}"></GridViewColumn>
+                                                       
+                                                        <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding aDonGia,StringFormat= {} {0:N0} VNĐ}"></GridViewColumn>
+                                                        <GridView.ColumnHeaderContainerStyle>
+                                                            <Style TargetType="GridViewColumnHeader">
+                                                                <Setter Property="Height" Value="35"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="Width" Value="206"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                                <Setter Property="FontSize" Value="15"/>
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                            <GradientStop Color="Blue" />
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GridView.ColumnHeaderContainerStyle>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+
+                <!--Quản lý loại món ăn-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img5" Height="auto" Width="auto" Source="iconloaimonan.jpg" />
+                            <TextBlock Text="Quản lý loại món ăn" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="4 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách loại món ăn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách loại món ăn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 0"/>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox  Text="{Binding TenLoaiMon}" materialDesign:HintAssist.Hint="Tên Loại Món" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding AddCommandLoaiMon}" Margin="5" Width="120" Height="auto" Background="Blue">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthem.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thêm" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding EditCommandSuaMon}" Margin="5" Width="120" Height="auto" Background="Blue">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconedit.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding DeleteCommandXoaMon}" Margin="5" Width="120" Height="auto" Background="Blue">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconxoa.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Xóa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1" Margin="20 50 20 0">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListView ItemsSource="{Binding a1LoaiMon}" SelectedItem="{Binding SelectedItemLoaiMonAn1,Mode=OneWayToSource}" HorizontalAlignment="Center">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderBrush" Value="Blue" />
+                                                        <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                                <Setter Property="BorderBrush" Value="Blue" />
+                                                                <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                <Setter Property="Background" Value="#FFFFC704" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="Blue" />
+                                                                <Setter Property="BorderBrush" Value="Red" />
+                                                                <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                                        <GridViewColumn Header="Tên loại món ăn" DisplayMemberBinding="{Binding LOAIMON.TenLoaiMon}"></GridViewColumn>
+                                                        <GridView.ColumnHeaderContainerStyle>
+                                                            <Style TargetType="GridViewColumnHeader">
+                                                                <Setter Property="Height" Value="35"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="Width" Value="320"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                                <Setter Property="FontSize" Value="15"/>
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                            <GradientStop Color="Blue" />
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GridView.ColumnHeaderContainerStyle>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+
+
+                <!--Thống kê danh thu-->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img2" Height="auto" Width="auto" Source="ButtonThongKe.png" />
+                            <TextBlock Text="Quản lý thống kê doanh thu" Margin="2,0,0,0" VerticalAlignment="Center"  Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Blue" BorderThickness="0 0 0 4" />
+                                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Blue" BorderThickness="4 0 0 4" />
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách thống kê doanh thu" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách thống kê doanh thu" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="a1.jpg"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Margin="20 50 20 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid  Grid.Row="0" Margin="20 20 20 20">
+                                            <DatePicker materialDesign:HintAssist.Hint="Lựa chọn ngày bắt đầu cần thống kê doanh thu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDate="{Binding NgayBatDauThongKeDoanhThu,StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                        </Grid>
+                                        <Grid  Grid.Row="1" Margin="20 20 20 20">
+                                            <DatePicker materialDesign:HintAssist.Hint="Lựa chọn ngày kết thúc cần thống kê doanh thu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDate="{Binding NgayKetThucThongKeDoanhThu,StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="0 30 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding TimKiem}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="120" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconthongke.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   Thống kê" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding InThongKeDoanhThu}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="140" Height="auto" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="iconinhoadon.png" Height="20" Width="20"/>
+                                                        <TextBlock Text="   In doanh thu" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid  Grid.Row="3">
+                                            <TextBlock FontSize="15" Margin="5 25 5 0" HorizontalAlignment="Center" Foreground="Red" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"   Text="{Binding TongTienDoanhThuLa}"></TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                    <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="4 0 0 0"/>
+                                    <Grid Grid.Column="1" Margin="20 50 20 0" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="595" x:Name="a">
+                                                <ListView ItemsSource="{Binding thongkedoanhthu}" HorizontalAlignment="Center">
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ListViewItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                            <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                    <Setter Property="BorderBrush" Value="Blue" />
+                                                                    <Setter Property="BorderThickness" Value="1 0 0 1" />
+                                                                    <Setter Property="Background" Value="#FFFFC704" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Foreground" Value="Blue" />
+                                                                    <Setter Property="BorderBrush" Value="Red" />
+                                                                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Ngày doanh thu" DisplayMemberBinding="{Binding NgayThanhToan,StringFormat={} {0:'Ngày ' dd 'tháng 'MM' năm 'yyyy}}"></GridViewColumn>
+                                                            <GridViewColumn Header="Tổng số tiền doanh thu theo ngày" DisplayMemberBinding="{Binding TongTien,StringFormat= {} {0:N0} VNĐ}"></GridViewColumn>
+                                                            <GridView.ColumnHeaderContainerStyle>
+                                                                <Style TargetType="GridViewColumnHeader">
+                                                                    <Setter Property="Height" Value="35"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="Width" Value="310"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                    <Setter Property="FontSize" Value="15"/>
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,2">
+                                                                                <GradientStop Color="Blue" />
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </GridView.ColumnHeaderContainerStyle>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+            </dragablz:TabablzControl>
+        </Grid>
+    </Grid>
+</Window>

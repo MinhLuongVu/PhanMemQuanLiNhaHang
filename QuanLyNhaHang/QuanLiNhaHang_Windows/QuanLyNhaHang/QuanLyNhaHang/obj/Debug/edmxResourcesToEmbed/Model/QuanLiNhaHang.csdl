@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLiNhaHangModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CHUCVU">
+    <Key>
+      <PropertyRef Name="MaChucVu" />
+    </Key>
+    <Property Name="MaChucVu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ChucVu1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NHANVIENs" Relationship="Self.FK_NHANVIEN_CHUCVU" FromRole="CHUCVU" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="DANHSACHBAN">
+    <Key>
+      <PropertyRef Name="MaBan" />
+    </Key>
+    <Property Name="MaBan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenBan" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="GOIMONs" Relationship="Self.FK_GOIMON_DANHSACHBAN" FromRole="DANHSACHBAN" ToRole="GOIMON" />
+  </EntityType>
+  <EntityType Name="GOIMON">
+    <Key>
+      <PropertyRef Name="MaGoiMon" />
+    </Key>
+    <Property Name="MaGoiMon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaMon" Type="Int32" />
+    <Property Name="MaBan" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="DonGia" Type="Decimal" Precision="9" Scale="0" />
+    <Property Name="ThanhTien" Type="Decimal" Precision="20" Scale="0" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="TrangThai" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DANHSACHBAN" Relationship="Self.FK_GOIMON_DANHSACHBAN" FromRole="GOIMON" ToRole="DANHSACHBAN" />
+    <NavigationProperty Name="MONAN" Relationship="Self.FK_GOIMON_MONAN" FromRole="GOIMON" ToRole="MONAN" />
+  </EntityType>
+  <EntityType Name="LOAIMON">
+    <Key>
+      <PropertyRef Name="MaLoaiMon" />
+    </Key>
+    <Property Name="MaLoaiMon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoaiMon" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MONANs" Relationship="Self.FK_MONAN_LOAIMON" FromRole="LOAIMON" ToRole="MONAN" />
+  </EntityType>
+  <EntityType Name="MONAN">
+    <Key>
+      <PropertyRef Name="MaMon" />
+    </Key>
+    <Property Name="MaMon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaLoaiMon" Type="Int32" Nullable="false" />
+    <Property Name="TenMon" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DonGia" Type="Decimal" Precision="9" Scale="0" />
+    <Property Name="HinhAnh" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="GOIMONs" Relationship="Self.FK_GOIMON_MONAN" FromRole="MONAN" ToRole="GOIMON" />
+    <NavigationProperty Name="LOAIMON" Relationship="Self.FK_MONAN_LOAIMON" FromRole="MONAN" ToRole="LOAIMON" />
+  </EntityType>
+  <EntityType Name="NHANVIEN">
+    <Key>
+      <PropertyRef Name="MaNV" />
+    </Key>
+    <Property Name="MaNV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HoTenNV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="HinhAnhNV" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="TenDN" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="MatKhau" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="HeThong" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MaChucVu" Type="Int32" />
+    <NavigationProperty Name="CHUCVU" Relationship="Self.FK_NHANVIEN_CHUCVU" FromRole="NHANVIEN" ToRole="CHUCVU" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="THONGKEDOANHTHU">
+    <Key>
+      <PropertyRef Name="MaTKDT" />
+    </Key>
+    <Property Name="MaTKDT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NgayThanhToan" Type="DateTime" Precision="0" />
+    <Property Name="TongTien" Type="Decimal" Precision="9" Scale="0" />
+  </EntityType>
+  <Association Name="FK_NHANVIEN_CHUCVU">
+    <End Role="CHUCVU" Type="Self.CHUCVU" Multiplicity="0..1" />
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CHUCVU">
+        <PropertyRef Name="MaChucVu" />
+      </Principal>
+      <Dependent Role="NHANVIEN">
+        <PropertyRef Name="MaChucVu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GOIMON_DANHSACHBAN">
+    <End Role="DANHSACHBAN" Type="Self.DANHSACHBAN" Multiplicity="0..1" />
+    <End Role="GOIMON" Type="Self.GOIMON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHSACHBAN">
+        <PropertyRef Name="MaBan" />
+      </Principal>
+      <Dependent Role="GOIMON">
+        <PropertyRef Name="MaBan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GOIMON_MONAN">
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="0..1" />
+    <End Role="GOIMON" Type="Self.GOIMON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONAN">
+        <PropertyRef Name="MaMon" />
+      </Principal>
+      <Dependent Role="GOIMON">
+        <PropertyRef Name="MaMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MONAN_LOAIMON">
+    <End Role="LOAIMON" Type="Self.LOAIMON" Multiplicity="1" />
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIMON">
+        <PropertyRef Name="MaLoaiMon" />
+      </Principal>
+      <Dependent Role="MONAN">
+        <PropertyRef Name="MaLoaiMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuanLiNhaHangEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CHUCVUs" EntityType="Self.CHUCVU" />
+    <EntitySet Name="DANHSACHBANs" EntityType="Self.DANHSACHBAN" />
+    <EntitySet Name="GOIMONs" EntityType="Self.GOIMON" />
+    <EntitySet Name="LOAIMONs" EntityType="Self.LOAIMON" />
+    <EntitySet Name="MONANs" EntityType="Self.MONAN" />
+    <EntitySet Name="NHANVIENs" EntityType="Self.NHANVIEN" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="THONGKEDOANHTHUs" EntityType="Self.THONGKEDOANHTHU" />
+    <AssociationSet Name="FK_NHANVIEN_CHUCVU" Association="Self.FK_NHANVIEN_CHUCVU">
+      <End Role="CHUCVU" EntitySet="CHUCVUs" />
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GOIMON_DANHSACHBAN" Association="Self.FK_GOIMON_DANHSACHBAN">
+      <End Role="DANHSACHBAN" EntitySet="DANHSACHBANs" />
+      <End Role="GOIMON" EntitySet="GOIMONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GOIMON_MONAN" Association="Self.FK_GOIMON_MONAN">
+      <End Role="MONAN" EntitySet="MONANs" />
+      <End Role="GOIMON" EntitySet="GOIMONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MONAN_LOAIMON" Association="Self.FK_MONAN_LOAIMON">
+      <End Role="LOAIMON" EntitySet="LOAIMONs" />
+      <End Role="MONAN" EntitySet="MONANs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
